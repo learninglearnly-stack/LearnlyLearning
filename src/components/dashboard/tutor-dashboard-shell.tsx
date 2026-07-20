@@ -19,6 +19,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import { SignOutButton } from "@/components/auth/sign-out-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/lib/constants";
@@ -159,6 +160,7 @@ export function TutorDashboardShell({ children, title, description }: TutorDashb
               <Link href="/tutors">View Public Site</Link>
             </Button>
             <ThemeToggle />
+            <SignOutButton variant="outline" />
           </div>
         </header>
 

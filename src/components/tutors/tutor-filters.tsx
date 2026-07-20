@@ -6,7 +6,7 @@ import { useCallback, useState, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FILTER_OPTIONS } from "@/data/mock/subjects";
+import { FILTER_OPTIONS } from "@/lib/constants/tutor-filters";
 import { cn } from "@/lib/utils";
 
 interface TutorFiltersProps {

@@ -13,8 +13,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { FILTER_OPTIONS } from "@/data/mock/subjects";
-import { MOCK_SUBJECTS } from "@/data/mock/subjects";
+import { FILTER_OPTIONS } from "@/lib/constants/tutor-filters";
+import { useSubjects } from "@/hooks/use-subjects";
 import { useTutorProfile } from "@/hooks/use-tutor-profile";
 import { generateId } from "@/lib/tutor-storage";
 import {
@@ -24,6 +24,7 @@ import {
 
 export function TutorProfileForm() {
   const { profile, updateProfile, isLoaded } = useTutorProfile();
+  const { subjects, isLoaded: subjectsLoaded } = useSubjects();
   const [specialtyInput, setSpecialtyInput] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -302,23 +303,29 @@ export function TutorProfileForm() {
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
-              {MOCK_SUBJECTS.map((subject) => {
-                const selected = (watchedSubjects ?? []).includes(subject.slug);
-                return (
-                  <button
-                    key={subject.id}
-                    type="button"
-                    onClick={() => toggleSubject(subject.slug)}
-                    className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
-                      selected
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-input hover:bg-muted"
-                    }`}
-                  >
-                    {subject.name}
-                  </button>
-                );
-              })}
+              {!subjectsLoaded ? (
+                <p className="text-muted-foreground text-sm">Loading subjects...</p>
+              ) : subjects.length === 0 ? (
+                <p className="text-muted-foreground text-sm">No subjects available yet.</p>
+              ) : (
+                subjects.map((subject) => {
+                  const selected = (watchedSubjects ?? []).includes(subject.slug);
+                  return (
+                    <button
+                      key={subject.id}
+                      type="button"
+                      onClick={() => toggleSubject(subject.slug)}
+                      className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+                        selected
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-input hover:bg-muted"
+                      }`}
+                    >
+                      {subject.name}
+                    </button>
+                  );
+                })
+              )}
             </div>
             {errors.subject_slugs && (
               <p className="text-destructive mt-2 text-xs">{errors.subject_slugs.message}</p>

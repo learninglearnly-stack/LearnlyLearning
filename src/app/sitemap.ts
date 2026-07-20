@@ -22,7 +22,7 @@ const staticRoutes = [
   "/signup",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: absoluteUrl(route),
     lastModified: new Date(),
@@ -30,14 +30,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === "" ? 1 : 0.8,
   }));
 
-  const tutorEntries: MetadataRoute.Sitemap = getAllTutorIds().map((id) => ({
+  const [tutorIds, subjectSlugs] = await Promise.all([getAllTutorIds(), getAllSubjectSlugs()]);
+
+  const tutorEntries: MetadataRoute.Sitemap = tutorIds.map((id) => ({
     url: absoluteUrl(`/tutors/${id}`),
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.7,
   }));
 
-  const subjectEntries: MetadataRoute.Sitemap = getAllSubjectSlugs().map((slug) => ({
+  const subjectEntries: MetadataRoute.Sitemap = subjectSlugs.map((slug) => ({
     url: absoluteUrl(`/subjects/${slug}`),
     lastModified: new Date(),
     changeFrequency: "weekly",

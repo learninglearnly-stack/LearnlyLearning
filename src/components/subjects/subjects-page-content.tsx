@@ -6,8 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getSubjectsByCategory } from "@/services/subjects";
 
-export function SubjectsPageContent() {
-  const grouped = getSubjectsByCategory();
+export async function SubjectsPageContent() {
+  const grouped = await getSubjectsByCategory();
 
   return (
     <MarketingLayout>
@@ -22,42 +22,46 @@ export function SubjectsPageContent() {
       </section>
 
       <section className="section-container py-8 lg:py-12">
-        <div className="space-y-12">
-          {Object.entries(grouped).map(([category, subjects]) => (
-            <div key={category}>
-              <h2 className="mb-6 text-xl font-semibold">{category}</h2>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {subjects.map((subject) => (
-                  <Link key={subject.id} href={`/subjects/${subject.slug}`}>
-                    <Card className="hover:border-primary/30 group h-full transition-all hover:-translate-y-1 hover:shadow-md">
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className="bg-primary/10 text-primary group-hover:bg-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-colors group-hover:text-white">
-                            <BookOpen className="h-5 w-5" />
+        {Object.keys(grouped).length === 0 ? (
+          <p className="text-muted-foreground text-center">No subjects available yet.</p>
+        ) : (
+          <div className="space-y-12">
+            {Object.entries(grouped).map(([category, subjects]) => (
+              <div key={category}>
+                <h2 className="mb-6 text-xl font-semibold">{category}</h2>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {subjects.map((subject) => (
+                    <Link key={subject.id} href={`/subjects/${subject.slug}`}>
+                      <Card className="hover:border-primary/30 group h-full transition-all hover:-translate-y-1 hover:shadow-md">
+                        <CardContent className="p-6">
+                          <div className="flex items-start gap-4">
+                            <div className="bg-primary/10 text-primary group-hover:bg-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-colors group-hover:text-white">
+                              <BookOpen className="h-5 w-5" />
+                            </div>
+                            <div className="flex-1">
+                              <h3 className="group-hover:text-primary font-semibold transition-colors">
+                                {subject.name}
+                              </h3>
+                              {subject.description && (
+                                <p className="text-muted-foreground mt-1 line-clamp-2 text-sm">
+                                  {subject.description}
+                                </p>
+                              )}
+                              <Badge variant="secondary" className="mt-3 gap-1">
+                                <Users className="h-3 w-3" />
+                                {subject.tutor_count} tutor{subject.tutor_count !== 1 ? "s" : ""}
+                              </Badge>
+                            </div>
                           </div>
-                          <div className="flex-1">
-                            <h3 className="group-hover:text-primary font-semibold transition-colors">
-                              {subject.name}
-                            </h3>
-                            {subject.description && (
-                              <p className="text-muted-foreground mt-1 line-clamp-2 text-sm">
-                                {subject.description}
-                              </p>
-                            )}
-                            <Badge variant="secondary" className="mt-3 gap-1">
-                              <Users className="h-3 w-3" />
-                              {subject.tutor_count} tutor{subject.tutor_count !== 1 ? "s" : ""}
-                            </Badge>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
     </MarketingLayout>
   );

@@ -4,6 +4,7 @@ import { GraduationCap, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
+import { AuthNav } from "@/components/auth/auth-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { APP_NAME, NAV_LINKS } from "@/lib/constants";
@@ -37,12 +38,7 @@ export function SiteHeader() {
 
           <div className="hidden items-center gap-2 lg:flex">
             <ThemeToggle />
-            <Button variant="ghost" asChild>
-              <Link href="/login">Sign In</Link>
-            </Button>
-            <Button asChild>
-              <Link href="/signup">Get Started</Link>
-            </Button>
+            <AuthNav />
           </div>
 
           <div className="flex items-center gap-2 lg:hidden">
@@ -76,16 +72,7 @@ export function SiteHeader() {
               </Link>
             ))}
             <div className="mt-2 flex flex-col gap-2 border-t pt-4">
-              <Button variant="outline" asChild>
-                <Link href="/login" onClick={() => setMobileOpen(false)}>
-                  Sign In
-                </Link>
-              </Button>
-              <Button asChild>
-                <Link href="/signup" onClick={() => setMobileOpen(false)}>
-                  Get Started
-                </Link>
-              </Button>
+              <AuthNav onNavigate={() => setMobileOpen(false)} />
             </div>
           </nav>
         </div>

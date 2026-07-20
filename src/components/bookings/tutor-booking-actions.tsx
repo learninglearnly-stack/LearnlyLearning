@@ -44,7 +44,7 @@ export function TutorBookingActions({ tutor }: TutorBookingActionsProps) {
           </div>
 
           <p className="text-muted-foreground mt-4 text-center text-xs">
-            Payment arranged directly with tutor. No platform fees.
+            Payment arranged directly with tutor. 
           </p>
         </CardContent>
       </Card>

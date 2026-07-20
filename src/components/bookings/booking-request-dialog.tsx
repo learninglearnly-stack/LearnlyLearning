@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Calendar, Clock, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -19,7 +20,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useStudentBookings, useStudentProfile } from "@/hooks/use-bookings";
+import { useStudentBookings } from "@/hooks/use-bookings";
+import { useUser } from "@/hooks/use-user";
 import { DURATION_OPTIONS } from "@/lib/constants/student-dashboard";
 import { TIME_OPTIONS } from "@/lib/constants/tutor-dashboard";
 import { formatCurrency } from "@/lib/utils";
@@ -37,7 +39,7 @@ interface BookingRequestDialogProps {
 
 export function BookingRequestDialog({ tutor, open, onOpenChange }: BookingRequestDialogProps) {
   const router = useRouter();
-  const { profile, isLoaded } = useStudentProfile();
+  const { user, isLoading: authLoading } = useUser();
   const { requestBooking } = useStudentBookings();
 
   const tomorrow = new Date();
@@ -65,10 +67,17 @@ export function BookingRequestDialog({ tutor, open, onOpenChange }: BookingReque
   } = form;
 
   useEffect(() => {
-    if (isLoaded && open) {
+    if (!authLoading && open && !user) {
+      onOpenChange(false);
+      router.push(`/login?redirect=/tutors/${tutor.id}`);
+    }
+  }, [authLoading, open, user, onOpenChange, router, tutor.id]);
+
+  useEffect(() => {
+    if (!authLoading && open && user) {
       reset({
-        student_name: profile.full_name,
-        student_email: profile.email,
+        student_name: user.profile?.full_name ?? "",
+        student_email: user.email,
         subject_slug: tutor.subjects[0]?.slug ?? "",
         preferred_date: minDate,
         preferred_time: "10:00",
@@ -76,10 +85,16 @@ export function BookingRequestDialog({ tutor, open, onOpenChange }: BookingReque
         message: "",
       });
     }
-  }, [isLoaded, open, profile, tutor.subjects, reset, minDate]);
+  }, [authLoading, open, user, tutor.subjects, reset, minDate]);
 
   const onSubmit = (data: BookingRequestFormValues) => {
+    if (!user) {
+      router.push(`/login?redirect=/tutors/${tutor.id}`);
+      return;
+    }
+
     requestBooking(tutor, data);
+
     toast.success("Lesson request sent!", {
       description: `${tutor.full_name} will review your request shortly.`,
     });

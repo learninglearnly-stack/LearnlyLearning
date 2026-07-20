@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-import { PlaceholderPage } from "@/components/placeholder-page";
+import { SignupForm } from "@/components/auth/signup-form";
+import { MarketingLayout } from "@/components/layout/marketing-layout";
 
 export const metadata: Metadata = {
   title: "Sign Up",
@@ -9,9 +10,10 @@ export const metadata: Metadata = {
 
 export default function SignupPage() {
   return (
-    <PlaceholderPage
-      title="Create Account"
-      description="Student and tutor registration with Supabase Auth will be implemented in Phase 2."
-    />
+    <MarketingLayout>
+      <section className="section-container py-16 lg:py-24">
+        <SignupForm />
+      </section>
+    </MarketingLayout>
   );
 }

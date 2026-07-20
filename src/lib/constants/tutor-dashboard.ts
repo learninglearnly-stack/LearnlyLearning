@@ -25,7 +25,7 @@ export const BECOME_TUTOR_STEPS = [
     step: "03",
     title: "Start Teaching",
     description:
-      "Receive booking requests, chat with students, and arrange payment directly. No platform fees.",
+      "Receive booking requests, chat with students, and arrange payment directly. ",
   },
 ] as const;
 

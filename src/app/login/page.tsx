@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-import { PlaceholderPage } from "@/components/placeholder-page";
+import { LoginForm } from "@/components/auth/login-form";
+import { MarketingLayout } from "@/components/layout/marketing-layout";
 
 export const metadata: Metadata = {
   title: "Sign In",
@@ -9,9 +10,10 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <PlaceholderPage
-      title="Sign In"
-      description="Authentication with email/password and Google login will be implemented in Phase 2."
-    />
+    <MarketingLayout>
+      <section className="section-container py-16 lg:py-24">
+        <LoginForm />
+      </section>
+    </MarketingLayout>
   );
 }

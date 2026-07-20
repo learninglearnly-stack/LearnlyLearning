@@ -7,15 +7,14 @@ import { TutorFilters } from "@/components/tutors/tutor-filters";
 import { TutorsPagination } from "@/components/tutors/tutors-pagination";
 import { getSubjects } from "@/services/subjects";
 import { getTutors } from "@/services/tutors";
-import type { TutorFilters as TutorFiltersType } from "@/types";
+import type { PaginatedResult, Tutor, TutorFilters as TutorFiltersType } from "@/types";
 
 interface TutorsGridProps {
   filters: TutorFiltersType;
+  result: PaginatedResult<Tutor>;
 }
 
-export function TutorsGrid({ filters }: TutorsGridProps) {
-  const result = getTutors(filters);
-
+function TutorsGrid({ filters, result }: TutorsGridProps) {
   if (result.data.length === 0) {
     return <EmptyState />;
   }
@@ -41,8 +40,13 @@ interface TutorsPageContentProps {
   filters: TutorFiltersType;
 }
 
-export function TutorsPageContent({ filters }: TutorsPageContentProps) {
-  const subjects = getSubjects().map((s) => ({ slug: s.slug, name: s.name }));
+export async function TutorsPageContent({ filters }: TutorsPageContentProps) {
+  const [subjects, result] = await Promise.all([
+    getSubjects(),
+    getTutors(filters),
+  ]);
+
+  const subjectOptions = subjects.map((s) => ({ slug: s.slug, name: s.name }));
 
   return (
     <MarketingLayout>
@@ -60,11 +64,11 @@ export function TutorsPageContent({ filters }: TutorsPageContentProps) {
         <div className="grid gap-8 lg:grid-cols-4">
           <aside className="lg:col-span-1">
             <Suspense fallback={<div className="bg-muted h-96 animate-pulse rounded-2xl" />}>
-              <TutorFilters subjects={subjects} />
+              <TutorFilters subjects={subjectOptions} />
             </Suspense>
           </aside>
           <div className="lg:col-span-3">
-            <TutorsGrid filters={filters} />
+            <TutorsGrid filters={filters} result={result} />
           </div>
         </div>
       </section>

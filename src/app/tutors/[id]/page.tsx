@@ -4,19 +4,17 @@ import { notFound } from "next/navigation";
 import { MarketingLayout } from "@/components/layout/marketing-layout";
 import { TutorProfileView } from "@/components/tutors/tutor-profile-view";
 import { absoluteUrl } from "@/lib/utils";
-import { getAllTutorIds, getTutorById } from "@/services/tutors";
+import { getTutorById } from "@/services/tutors";
+
+export const dynamic = "force-dynamic";
 
 interface TutorDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
-export async function generateStaticParams() {
-  return getAllTutorIds().map((id) => ({ id }));
-}
-
 export async function generateMetadata({ params }: TutorDetailPageProps): Promise<Metadata> {
   const { id } = await params;
-  const tutor = getTutorById(id);
+  const tutor = await getTutorById(id);
 
   if (!tutor) {
     return { title: "Tutor Not Found" };
@@ -36,7 +34,7 @@ export async function generateMetadata({ params }: TutorDetailPageProps): Promis
 
 export default async function TutorDetailPage({ params }: TutorDetailPageProps) {
   const { id } = await params;
-  const tutor = getTutorById(id);
+  const tutor = await getTutorById(id);
 
   if (!tutor) {
     notFound();

@@ -66,7 +66,7 @@ export function HeroSection() {
 
             <p className="text-muted-foreground mt-6 text-lg leading-relaxed">
               Connect with expert tutors for personalized 1-on-1 lessons. Search by subject,
-              compare profiles, book sessions, and arrange payment directly — no platform fees.
+              compare profiles, book sessions, and arrange payment directly — 
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-4">

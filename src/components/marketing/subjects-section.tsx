@@ -5,8 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getSubjects } from "@/services/subjects";
 
-export function SubjectsSection() {
-  const subjects = getSubjects().slice(0, 8);
+export async function SubjectsSection() {
+  const subjects = (await getSubjects()).slice(0, 8);
+
+  if (subjects.length === 0) {
+    return null;
+  }
 
   return (
     <section className="bg-muted/50 py-20 lg:py-28">

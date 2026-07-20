@@ -8,21 +8,19 @@ import { TutorCard } from "@/components/tutors/tutor-card";
 import { TutorFilters } from "@/components/tutors/tutor-filters";
 import { TutorsPagination } from "@/components/tutors/tutors-pagination";
 import { Badge } from "@/components/ui/badge";
-import { getAllSubjectSlugs, getSubjectBySlug, getSubjects } from "@/services/subjects";
+import { getSubjectBySlug, getSubjects } from "@/services/subjects";
 import { getTutorsBySubjectSlug, parseTutorFilters } from "@/services/tutors";
+
+export const dynamic = "force-dynamic";
 
 interface SubjectDetailPageProps {
   params: Promise<{ slug: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export async function generateStaticParams() {
-  return getAllSubjectSlugs().map((slug) => ({ slug }));
-}
-
 export async function generateMetadata({ params }: SubjectDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const subject = getSubjectBySlug(slug);
+  const subject = await getSubjectBySlug(slug);
 
   if (!subject) {
     return { title: "Subject Not Found" };
@@ -38,7 +36,7 @@ export async function generateMetadata({ params }: SubjectDetailPageProps): Prom
 
 export default async function SubjectDetailPage({ params, searchParams }: SubjectDetailPageProps) {
   const { slug } = await params;
-  const subject = getSubjectBySlug(slug);
+  const subject = await getSubjectBySlug(slug);
 
   if (!subject) {
     notFound();
@@ -46,8 +44,11 @@ export default async function SubjectDetailPage({ params, searchParams }: Subjec
 
   const rawParams = await searchParams;
   const filters = parseTutorFilters(rawParams);
-  const result = getTutorsBySubjectSlug(slug, filters);
-  const allSubjects = getSubjects().map((s) => ({ slug: s.slug, name: s.name }));
+  const [result, allSubjects] = await Promise.all([
+    getTutorsBySubjectSlug(slug, filters),
+    getSubjects(),
+  ]);
+  const subjectOptions = allSubjects.map((s) => ({ slug: s.slug, name: s.name }));
 
   return (
     <MarketingLayout>
@@ -70,7 +71,7 @@ export default async function SubjectDetailPage({ params, searchParams }: Subjec
         <div className="grid gap-8 lg:grid-cols-4">
           <aside className="lg:col-span-1">
             <Suspense fallback={<div className="bg-muted h-96 animate-pulse rounded-2xl" />}>
-              <TutorFilters subjects={allSubjects} />
+              <TutorFilters subjects={subjectOptions} />
             </Suspense>
           </aside>
           <div className="lg:col-span-3">
