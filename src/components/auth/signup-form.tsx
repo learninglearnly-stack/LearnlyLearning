@@ -87,7 +87,7 @@ function SignupFormInner() {
       <div className="mb-8 text-center">
         <h1 className="text-2xl font-bold">Create Account</h1>
         <p className="text-muted-foreground mt-2 text-sm">
-          Join Learnly as a student or tutor. It&apos;s free to get started.
+          Join StudySpark Tutors as a student or tutor. It&apos;s free to get started.
         </p>
       </div>
 

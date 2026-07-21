@@ -4,7 +4,7 @@ import { AdminOverview } from "@/components/dashboard/admin-overview";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
-  description: "Manage the Learnly tutoring marketplace.",
+  description: "Manage the StudySpark Tutors tutoring marketplace.",
 };
 
 export default function AdminPage() {

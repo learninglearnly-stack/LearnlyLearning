@@ -5,7 +5,7 @@ import { MarketingLayout } from "@/components/layout/marketing-layout";
 
 export const metadata: Metadata = {
   title: "Sign Up",
-  description: "Create your free Learnly account as a student or tutor.",
+  description: "Create your free StudySpark Tutors account as a student or tutor.",
 };
 
 export default function SignupPage() {

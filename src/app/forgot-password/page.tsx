@@ -5,7 +5,7 @@ import { MarketingLayout } from "@/components/layout/marketing-layout";
 
 export const metadata: Metadata = {
   title: "Forgot Password",
-  description: "Reset your Learnly account password.",
+  description: "Reset your StudySpark Tutors account password.",
 };
 
 export default function ForgotPasswordPage() {

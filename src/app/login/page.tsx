@@ -5,7 +5,7 @@ import { MarketingLayout } from "@/components/layout/marketing-layout";
 
 export const metadata: Metadata = {
   title: "Sign In",
-  description: "Sign in to your Learnly account to manage bookings, messages, and profile.",
+  description: "Sign in to your StudySpark Tutors account to manage bookings, messages, and profile.",
 };
 
 export default function LoginPage() {

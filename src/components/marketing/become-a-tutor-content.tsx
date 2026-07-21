@@ -23,7 +23,7 @@ export function BecomeATutorContent() {
             <span className="text-primary">Grow Your Practice.</span>
           </h1>
           <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-lg">
-            Join Learnly as a tutor. Set your own rates, manage your schedule, and connect with
+            Join StudySpark Tutors as a tutor. Set your own rates, manage your schedule, and connect with
             students — with zero platform commission.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -39,7 +39,7 @@ export function BecomeATutorContent() {
 
       <section className="py-16 lg:py-20">
         <div className="section-container">
-          <h2 className="mb-12 text-center text-3xl font-bold">Why Teach on Learnly?</h2>
+          <h2 className="mb-12 text-center text-3xl font-bold">Why Teach on StudySpark Tutors?</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {TUTOR_BENEFITS.map((benefit) => {
               const Icon = BENEFIT_ICONS[benefit.icon];

@@ -1,4 +1,4 @@
--- Learnly initial schema
+-- StudySpark Tutors initial schema
 -- Profiles, tutors, subjects, bookings, messages, reviews, favorites, availability, notifications
 
 -- Extensions

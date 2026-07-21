@@ -16,7 +16,7 @@ export function BenefitsSection() {
       <div className="section-container">
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Why Learn With {process.env.NEXT_PUBLIC_APP_NAME ?? "Learnly"}
+            Why Learn With {process.env.NEXT_PUBLIC_APP_NAME ?? "StudySpark Tutors"}
           </h2>
           <p className="text-muted-foreground mt-4 text-lg">
             A modern platform built for real learning — discover tutors, book lessons, and grow at

@@ -5,7 +5,7 @@ import { BecomeATutorContent } from "@/components/marketing/become-a-tutor-conte
 export const metadata: Metadata = {
   title: "Become a Tutor",
   description:
-    "Join Learnly as a tutor. Set your rates, manage availability, and teach students with zero platform commission.",
+    "Join StudySpark Tutors as a tutor. Set your rates, manage availability, and teach students with zero platform commission.",
 };
 
 export default function BecomeATutorPage() {

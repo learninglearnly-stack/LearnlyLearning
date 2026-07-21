@@ -1,4 +1,4 @@
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? "Learnly";
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME ?? "StudySpark Tutors";
 
 export const APP_DESCRIPTION =
   "Discover expert tutors, book 1-on-1 lessons, and achieve your learning goals. No payment processing — arrange fees directly with your tutor.";
@@ -112,7 +112,7 @@ export const TESTIMONIALS = [
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
     rating: 5,
     quote:
-      "Learnly made it easy to find a Spanish tutor for business conversations. Flexible scheduling around my work hours was a game-changer.",
+      "StudySpark Tutors made it easy to find a Spanish tutor for business conversations. Flexible scheduling around my work hours was a game-changer.",
   },
   {
     name: "Emily Rodriguez",
